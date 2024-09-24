@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:valoku_app/core/config/config.dart';
 import 'package:valoku_app/core/routers/routers.dart';
+import 'package:valoku_app/features/agent/data/repositories/repositories.dart';
+import 'package:valoku_app/features/agent/presentation/bloc/get_agent_bloc.dart';
 import 'package:valoku_app/features/agent/presentation/pages/pages.dart';
 
 List<GoRoute> _registerRoutes() {
@@ -9,7 +12,11 @@ List<GoRoute> _registerRoutes() {
       name: RouterConstans.agentPage,
       path: RouterConstans.agentPage,
       builder: (BuildContext context, GoRouterState state) {
-        return const AgentPage();
+        return AgentPage(
+          getAgentBloc: GetAgentBloc(
+            getIt<AgentRepository>(),
+          ),
+        );
       },
     ),
     GoRoute(

@@ -1,3 +1,6 @@
+import 'package:injectable/injectable.dart';
+import 'package:valoku_app/core/config/flavors.dart';
+import 'package:valoku_app/core/network/dio_client.dart';
 import 'package:valoku_app/core/network/network.dart';
 import 'package:valoku_app/features/agent/data/models/models.dart';
 
@@ -11,11 +14,14 @@ abstract class AgentDataSource extends BaseRemoteDataSource {
   Future<ApiResult<AgentModel>> getAgent();
 }
 
-class AgentDataSourceImpl extends AgentDataSource {
-  AgentDataSourceImpl({
-    required super.dio,
-    required super.apiBaseUrl,
-  });
+@Singleton(signalsReady: true, as: AgentDataSource)
+class AgentDataSourceImpl extends BaseRemoteDataSource
+    implements AgentDataSource {
+  AgentDataSourceImpl()
+      : super(
+          dio: DioClient().dio,
+          apiBaseUrl: FlavorConfig.instance!.flavorValues.baseUrl,
+        );
 
   @override
   Future<ApiResult<ListResult<AgentModel>>> getListAgent() async {
