@@ -58,67 +58,71 @@ class _ListAgentPageContentState extends State<ListAgentPageContent> {
             if (state.error != null) {
               return Center(child: Text(state.error.toString()));
             }
-            return CarouselSlider(
-              options: CarouselOptions(
-                autoPlay: true,
-                aspectRatio: 2.0,
-                enlargeCenterPage: true,
-                height: MediaQuery.of(context).size.height,
-              ),
-              items: state.data!.map((v) {
-                var fullPortrait = v.fullPortrait;
-                var background = v.background;
-                return Builder(
-                  builder: (BuildContext context) {
-                    return Container(
-                      decoration: BoxDecoration(
-                        gradient: v.backgroundGradientColors != null
-                            ? LinearGradient(
-                                begin: Alignment.topCenter,
-                                end: Alignment.bottomCenter,
-                                colors: v.backgroundGradientColors!
-                                    .map((color) => Color(int.parse(
-                                        '0xff${color.substring(0, 8)}'))) // Konversi hex ke Color
-                                    .toList(),
-                              )
-                            : null,
-                        image: background != null
-                            ? DecorationImage(
-                                image: NetworkImage(background), // Data dari v
-                                fit: BoxFit.cover,
-                                // Menyesuaikan ukuran gambar
-                              )
-                            : null, // Jika tidak ada gambar, background tidak ditambahkan
-                      ),
-                      child: fullPortrait != null
-                          ? CachedNetworkImage(
-                              imageUrl: fullPortrait,
-                              imageBuilder: (context, imageProvider) =>
-                                  Container(
-                                width: MediaQuery.of(context)
-                                    .size
-                                    .width, // Lebar layar penuh
-                                height: MediaQuery.of(context)
-                                    .size
-                                    .height, // Tinggi layar penuh
-                                decoration: BoxDecoration(
-                                  image: DecorationImage(
-                                    image: imageProvider,
-                                    fit: BoxFit
-                                        .cover, // Memperbesar gambar agar memenuhi layar penuh
+            return Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: CarouselSlider(
+                options: CarouselOptions(
+                  autoPlay: true,
+                  aspectRatio: 2.0,
+                  enlargeCenterPage: true,
+                  height: MediaQuery.of(context).size.height,
+                ),
+                items: state.data!.map((v) {
+                  var fullPortrait = v.fullPortrait;
+                  var background = v.background;
+                  return Builder(
+                    builder: (BuildContext context) {
+                      return Container(
+                        decoration: BoxDecoration(
+                          gradient: v.backgroundGradientColors != null
+                              ? LinearGradient(
+                                  begin: Alignment.topCenter,
+                                  end: Alignment.bottomCenter,
+                                  colors: v.backgroundGradientColors!
+                                      .map((color) => Color(int.parse(
+                                          '0xff${color.substring(0, 8)}'))) // Konversi hex ke Color
+                                      .toList(),
+                                )
+                              : null,
+                          image: background != null
+                              ? DecorationImage(
+                                  image:
+                                      NetworkImage(background), // Data dari v
+                                  fit: BoxFit.cover,
+                                  // Menyesuaikan ukuran gambar
+                                )
+                              : null, // Jika tidak ada gambar, background tidak ditambahkan
+                        ),
+                        child: fullPortrait != null
+                            ? CachedNetworkImage(
+                                imageUrl: fullPortrait,
+                                imageBuilder: (context, imageProvider) =>
+                                    Container(
+                                  width: MediaQuery.of(context)
+                                      .size
+                                      .width, // Lebar layar penuh
+                                  height: MediaQuery.of(context)
+                                      .size
+                                      .height, // Tinggi layar penuh
+                                  decoration: BoxDecoration(
+                                    image: DecorationImage(
+                                      image: imageProvider,
+                                      fit: BoxFit
+                                          .cover, // Memperbesar gambar agar memenuhi layar penuh
+                                    ),
                                   ),
                                 ),
-                              ),
-                              placeholder: (context, url) => const Center(
-                                  child: CircularProgressIndicator()),
-                              errorWidget: (context, url, error) =>
-                                  const Icon(Icons.error),
-                            )
-                          : null,
-                    );
-                  },
-                );
-              }).toList(),
+                                placeholder: (context, url) => const Center(
+                                    child: CircularProgressIndicator()),
+                                errorWidget: (context, url, error) =>
+                                    const Icon(Icons.error),
+                              )
+                            : null,
+                      );
+                    },
+                  );
+                }).toList(),
+              ),
             );
           }
           return Container();
