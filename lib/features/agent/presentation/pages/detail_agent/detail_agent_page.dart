@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:valoku_app/features/agent/presentation/bloc/get_agent_bloc.dart';
+import 'package:valoku_app/features/agent/presentation/blocs/get_agent/get_agent_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AgentPage extends StatelessWidget {

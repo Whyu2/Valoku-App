@@ -3,14 +3,16 @@ import 'package:go_router/go_router.dart';
 import 'package:valoku_app/core/config/config.dart';
 import 'package:valoku_app/core/routers/routers.dart';
 import 'package:valoku_app/features/agent/data/repositories/repositories.dart';
-import 'package:valoku_app/features/agent/presentation/bloc/get_agent_bloc.dart';
-import 'package:valoku_app/features/agent/presentation/pages/pages.dart';
+import 'package:valoku_app/features/agent/presentation/blocs/get_agent/get_agent_bloc.dart';
+import 'package:valoku_app/features/agent/presentation/blocs/get_list_agent/get_list_agent_bloc.dart';
+import 'package:valoku_app/features/agent/presentation/pages/detail_agent/detail_agent_page.dart';
+import 'package:valoku_app/features/agent/presentation/pages/list_agent/list_agent_page.dart';
 
 List<GoRoute> _registerRoutes() {
   return [
     GoRoute(
-      name: RouterConstans.agentPage,
-      path: RouterConstans.agentPage,
+      name: RouterConstans.agentDetail,
+      path: RouterConstans.agentDetail,
       builder: (BuildContext context, GoRouterState state) {
         return AgentPage(
           getAgentBloc: GetAgentBloc(
@@ -20,10 +22,14 @@ List<GoRoute> _registerRoutes() {
       },
     ),
     GoRoute(
-      name: RouterConstans.agentDetailPage,
-      path: RouterConstans.agentDetailPage,
+      name: RouterConstans.agents,
+      path: RouterConstans.agents,
       builder: (BuildContext context, GoRouterState state) {
-        return const DetailAgentPage();
+        return ListAgentPage(
+          getListAgentBloc: GetListAgentBloc(
+            getIt<AgentRepository>(),
+          ),
+        );
       },
     ),
   ];
@@ -31,5 +37,5 @@ List<GoRoute> _registerRoutes() {
 
 final GoRouter appRouter = GoRouter(
   routes: _registerRoutes(),
-  initialLocation: RouterConstans.agentPage,
+  initialLocation: RouterConstans.agents,
 );

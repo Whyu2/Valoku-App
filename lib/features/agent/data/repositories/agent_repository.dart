@@ -22,4 +22,16 @@ class AgentRepository {
       rethrow;
     }
   }
+
+  Future<List<AgentModel>?> getListAgentFromRemote() async {
+    try {
+      final response = await _remoteDataSource.getListAgent();
+      List<AgentModel>? result = response.data!.data;
+      return result;
+    } on DioError catch (err) {
+      throw err.toString();
+    } catch (_) {
+      rethrow;
+    }
+  }
 }
