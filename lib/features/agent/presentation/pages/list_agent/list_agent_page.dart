@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:valoku_app/features/agent/presentation/blocs/get_list_agent/get_list_agent_bloc.dart';
 
 class ListAgentPage extends StatelessWidget {
@@ -45,7 +46,10 @@ class _ListAgentPageContentState extends State<ListAgentPageContent> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Agent'),
+        title: Text(
+          'Agent',
+          style: GoogleFonts.getFont('Anton'),
+        ),
       ),
       body: BlocBuilder<GetListAgentBloc, GetListAgentState>(
         builder: (context, state) {
